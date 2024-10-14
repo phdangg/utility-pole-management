@@ -20,8 +20,11 @@ public class Pole {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer poleId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String poleName;
+
+    @Column(nullable = false, unique = true)
+    private String poleShortName;
 
     @Column(nullable = false)
     private Boolean status;
