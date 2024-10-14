@@ -1,6 +1,7 @@
 package com.evn.utilitypolemanagement.services.impl;
 
 import com.evn.utilitypolemanagement.entities.Pole;
+import com.evn.utilitypolemanagement.exceptions.Pole.DuplicatePoleException;
 import com.evn.utilitypolemanagement.exceptions.Pole.PoleNotFoundException;
 import com.evn.utilitypolemanagement.repositories.PoleRepository;
 import com.evn.utilitypolemanagement.services.PoleService;
@@ -19,6 +20,7 @@ public class PoleServiceImpl implements PoleService {
 
     @Override
     public Pole createPole(Pole pole) {
+        validatePoleUniqueness(pole,null);
         return poleRepository.save(pole);
     }
 
@@ -26,6 +28,8 @@ public class PoleServiceImpl implements PoleService {
     public Pole updatePole(Integer id, Pole poleDetails) {
         Pole pole = poleRepository.findById(id)
                 .orElseThrow(() -> new PoleNotFoundException("Pole not found with id " + id));
+        validatePoleUniqueness(poleDetails,id);
+
         pole.setPoleName(poleDetails.getPoleName());
         pole.setStatus(poleDetails.getStatus());
         // No need to set created timestamp, as it is managed by Hibernate
@@ -48,5 +52,12 @@ public class PoleServiceImpl implements PoleService {
         Pole pole = poleRepository.findById(id)
                 .orElseThrow(() -> new PoleNotFoundException("Pole not found with id " + id));
         poleRepository.delete(pole);
+    }
+
+    private void validatePoleUniqueness(Pole pole, Integer poleId) {
+        Optional<Pole> existingPole = poleRepository.findByPoleNameOrPoleShortName(pole.getPoleName(), pole.getPoleShortName());
+        if (existingPole.isPresent() && (poleId == null || !existingPole.get().getPoleId().equals(poleId))) {
+            throw new DuplicatePoleException("Pole with name '" + pole.getPoleName() + "' or short name '" + pole.getPoleShortName() + "' already exists.");
+        }
     }
 }
