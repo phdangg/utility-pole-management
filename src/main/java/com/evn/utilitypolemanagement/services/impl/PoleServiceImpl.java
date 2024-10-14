@@ -31,6 +31,7 @@ public class PoleServiceImpl implements PoleService {
         validatePoleUniqueness(poleDetails,id);
 
         pole.setPoleName(poleDetails.getPoleName());
+        pole.setPoleShortName(poleDetails.getPoleShortName());
         pole.setStatus(poleDetails.getStatus());
         // No need to set created timestamp, as it is managed by Hibernate
         return poleRepository.save(pole);
