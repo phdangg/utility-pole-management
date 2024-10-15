@@ -15,17 +15,14 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "pole")
-public class Pole {
+@Table(name = "price_list")
+public class PriceList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer poleId;
+    private Integer priceListId;
 
-    @Column(nullable = false, unique = true)
-    private String poleName;
-
-    @Column(nullable = false, unique = true)
-    private String poleShortName;
+    @Column(unique = true)
+    private String description;
 
     @Column(nullable = false)
     private Boolean status;
@@ -35,5 +32,4 @@ public class Pole {
 
     @UpdateTimestamp
     private Timestamp updated;
-
 }
