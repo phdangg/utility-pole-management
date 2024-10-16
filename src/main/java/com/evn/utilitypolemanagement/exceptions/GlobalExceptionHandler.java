@@ -3,6 +3,7 @@ package com.evn.utilitypolemanagement.exceptions;
 import com.evn.utilitypolemanagement.exceptions.Pole.DuplicatePoleException;
 import com.evn.utilitypolemanagement.exceptions.Pole.PoleNotFoundException;
 import com.evn.utilitypolemanagement.exceptions.PriceList.PriceListNotFoundException;
+import com.evn.utilitypolemanagement.exceptions.PriceListPole.PriceListPoleNotFound;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -21,6 +22,10 @@ public class GlobalExceptionHandler {
     }
     @ExceptionHandler(PriceListNotFoundException.class)
     public ProblemDetail handlePriceListNotFoundException(PriceListNotFoundException e){
+        return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND,e.getMessage());
+    }
+    @ExceptionHandler(PriceListPoleNotFound.class)
+    public ProblemDetail handlePriceListPoleNotFound(PriceListPoleNotFound e){
         return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND,e.getMessage());
     }
 }
