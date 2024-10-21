@@ -3,7 +3,6 @@ package com.evn.utilitypolemanagement.services;
 import com.evn.utilitypolemanagement.entities.PriceList;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface PriceListService {
     PriceList createPriceList(PriceList priceList);
