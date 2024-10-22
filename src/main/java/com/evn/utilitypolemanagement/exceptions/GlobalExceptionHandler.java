@@ -1,6 +1,8 @@
 package com.evn.utilitypolemanagement.exceptions;
 
-import com.evn.utilitypolemanagement.exceptions.Pole.DuplicatePoleException;
+import com.evn.utilitypolemanagement.exceptions.CapleType.CableTypeAlreadyExistsException;
+import com.evn.utilitypolemanagement.exceptions.CapleType.CableTypeNotFoundException;
+import com.evn.utilitypolemanagement.exceptions.Pole.PoleAlreadyExistsException;
 import com.evn.utilitypolemanagement.exceptions.Pole.PoleNotFoundException;
 import com.evn.utilitypolemanagement.exceptions.PriceList.PriceListNotFoundException;
 import com.evn.utilitypolemanagement.exceptions.PriceListPole.PriceListPoleNotFound;
@@ -12,8 +14,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(DuplicatePoleException.class)
-    public ProblemDetail handleDuplicatePoleException(DuplicatePoleException e){
+    @ExceptionHandler(PoleAlreadyExistsException.class)
+    public ProblemDetail handleDuplicatePoleException(PoleAlreadyExistsException e){
         return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST,e.getMessage());
     }
     @ExceptionHandler(PoleNotFoundException.class)
@@ -26,6 +28,14 @@ public class GlobalExceptionHandler {
     }
     @ExceptionHandler(PriceListPoleNotFound.class)
     public ProblemDetail handlePriceListPoleNotFound(PriceListPoleNotFound e){
+        return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND,e.getMessage());
+    }
+    @ExceptionHandler(CableTypeNotFoundException.class)
+    public ProblemDetail handleCapleTypeNotFoundException(CableTypeNotFoundException e){
+        return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND,e.getMessage());
+    }
+    @ExceptionHandler(CableTypeAlreadyExistsException.class)
+    public ProblemDetail handleCableTypeAlreadyExistsException(CableTypeAlreadyExistsException e){
         return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND,e.getMessage());
     }
 }
