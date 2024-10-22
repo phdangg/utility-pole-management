@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface PoleRepository extends JpaRepository<Pole,Integer> {
     Optional<Pole> findByPoleNameOrPoleShortName(String poleName, String poleShortName);
+    Optional<Pole> findByPoleName(String poleName);
+    Optional<Pole> findByPoleShortName(String poleShortName);
 }

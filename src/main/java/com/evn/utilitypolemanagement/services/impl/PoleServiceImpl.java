@@ -1,10 +1,11 @@
 package com.evn.utilitypolemanagement.services.impl;
 
 import com.evn.utilitypolemanagement.entities.Pole;
-import com.evn.utilitypolemanagement.exceptions.Pole.DuplicatePoleException;
+import com.evn.utilitypolemanagement.exceptions.Pole.PoleAlreadyExistsException;
 import com.evn.utilitypolemanagement.exceptions.Pole.PoleNotFoundException;
 import com.evn.utilitypolemanagement.repositories.PoleRepository;
 import com.evn.utilitypolemanagement.services.PoleService;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,21 +21,40 @@ public class PoleServiceImpl implements PoleService {
 
     @Override
     public Pole createPole(Pole pole) {
-        validatePoleUniqueness(pole,null);
-        return poleRepository.save(pole);
+        try {
+            return poleRepository.save(pole);
+        }
+        catch (DataIntegrityViolationException ex) {
+            if (isUniqueNameInDatabase(pole)) {
+                throw new PoleAlreadyExistsException("Already exist pole with the name " + pole.getPoleName());
+            }
+            if (isUniqueShortNameInDatabase(pole)) {
+                throw new PoleAlreadyExistsException("Already exist pole with the short name " + pole.getPoleShortName());
+            }
+            throw ex;
+        }
     }
 
     @Override
     public Pole updatePole(Integer id, Pole poleDetails) {
-        Pole pole = poleRepository.findById(id)
+        Pole existingPole = poleRepository.findById(id)
                 .orElseThrow(() -> new PoleNotFoundException("Pole not found with id " + id));
-        validatePoleUniqueness(poleDetails,id);
 
-        pole.setPoleName(poleDetails.getPoleName());
-        pole.setPoleShortName(poleDetails.getPoleShortName());
-        pole.setStatus(poleDetails.getStatus());
-        // No need to set created timestamp, as it is managed by Hibernate
-        return poleRepository.save(pole);
+        existingPole.setPoleName(poleDetails.getPoleName());
+        existingPole.setPoleShortName(poleDetails.getPoleShortName());
+        existingPole.setStatus(poleDetails.getStatus());
+        try {
+            return poleRepository.save(existingPole);
+        }
+        catch (DataIntegrityViolationException ex) {
+            if (isUniqueNameInDatabase(existingPole)) {
+                throw new PoleAlreadyExistsException("Already exist pole with the name " + existingPole.getPoleName());
+            }
+            if (isUniqueShortNameInDatabase(existingPole)) {
+                throw new PoleAlreadyExistsException("Already exist pole with the short name " + existingPole.getPoleShortName());
+            }
+            throw ex;
+        }
 
     }
 
@@ -54,11 +74,10 @@ public class PoleServiceImpl implements PoleService {
                 .orElseThrow(() -> new PoleNotFoundException("Pole not found with id " + id));
         poleRepository.delete(pole);
     }
-
-    private void validatePoleUniqueness(Pole pole, Integer poleId) {
-        Optional<Pole> existingPole = poleRepository.findByPoleNameOrPoleShortName(pole.getPoleName(), pole.getPoleShortName());
-        if (existingPole.isPresent() && (poleId == null || !existingPole.get().getPoleId().equals(poleId))) {
-            throw new DuplicatePoleException("Pole with name '" + pole.getPoleName() + "' or short name '" + pole.getPoleShortName() + "' already exists.");
-        }
+    private boolean isUniqueNameInDatabase(Pole pole) {
+        return poleRepository.findByPoleName(pole.getPoleName()).isPresent();
+    }
+    private boolean isUniqueShortNameInDatabase(Pole pole) {
+        return poleRepository.findByPoleShortName(pole.getPoleShortName()).isPresent();
     }
 }
