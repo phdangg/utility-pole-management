@@ -28,7 +28,7 @@ public class Pole {
     private String poleShortName;
 
     @Column(nullable = false)
-    private Boolean status;
+    private Boolean isEnable;
 
     @CreationTimestamp
     private Timestamp created;

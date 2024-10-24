@@ -25,7 +25,7 @@ public class PriceList {
     private String description;
 
     @Column(nullable = false)
-    private Boolean status;
+    private Boolean isEnable;
 
     @CreationTimestamp
     private Timestamp created;
