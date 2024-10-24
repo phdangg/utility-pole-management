@@ -29,7 +29,7 @@ public class PriceListServiceImpl implements PriceListService {
                 priceListRepository.findById(priceListId)
                         .orElseThrow(()-> new PriceListNotFoundException("PriceList with ID " + priceListId + " not found"));
         existingPriceList.setDescription(priceList.getDescription());
-        existingPriceList.setStatus(priceList.getStatus());
+        existingPriceList.setIsEnable(priceList.getIsEnable());
         return priceListRepository.save(existingPriceList);
     }
 

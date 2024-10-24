@@ -42,7 +42,7 @@ public class PoleServiceImpl implements PoleService {
 
         existingPole.setPoleName(poleDetails.getPoleName());
         existingPole.setPoleShortName(poleDetails.getPoleShortName());
-        existingPole.setStatus(poleDetails.getStatus());
+        existingPole.setIsEnable(poleDetails.getIsEnable());
         try {
             return poleRepository.save(existingPole);
         }
