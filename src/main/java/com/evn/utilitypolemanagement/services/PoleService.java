@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PoleService {
-    Pole createPole(Pole pole);
-    Pole updatePole(Integer id, Pole poleDetails);
-    Optional<Pole> getPoleById(Integer id);
-    List<Pole> getAllPoles();
-    void deletePole(Integer id);
+    Pole create(Pole pole);
+    Pole update(Integer id, Pole poleDetails);
+    Optional<Pole> get(Integer id);
+    List<Pole> getAll();
+    void delete(Integer id);
 }

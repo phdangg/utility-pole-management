@@ -3,12 +3,10 @@ package com.evn.utilitypolemanagement.controller;
 import com.evn.utilitypolemanagement.dto.PriceListPoleDTO;
 import com.evn.utilitypolemanagement.entities.PriceListPole;
 import com.evn.utilitypolemanagement.services.PriceListPoleService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/pricelist-poles")
@@ -22,13 +20,13 @@ public class PriceListPoleController {
 
     @GetMapping
     public List<PriceListPole> getAllPriceListPoles() {
-        return priceListPoleService.findAll();
+        return priceListPoleService.getAll();
     }
 
     @GetMapping("/{priceListId}/{poleId}")
     public ResponseEntity<PriceListPole> getPriceListPoleById(@PathVariable Integer priceListId, @PathVariable Integer poleId) {
         PriceListPole.Id id = new PriceListPole.Id(priceListId, poleId);
-        PriceListPole priceListPole = priceListPoleService.findById(id);
+        PriceListPole priceListPole = priceListPoleService.get(id);
         return ResponseEntity.ok(priceListPole);
     }
 
@@ -47,7 +45,7 @@ public class PriceListPoleController {
     @DeleteMapping("/{priceListId}/{poleId}")
     public ResponseEntity<Void> deletePriceListPole(@PathVariable Integer priceListId, @PathVariable Integer poleId) {
         PriceListPole.Id id = new PriceListPole.Id(priceListId, poleId);
-        priceListPoleService.deleteById(id);
+        priceListPoleService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

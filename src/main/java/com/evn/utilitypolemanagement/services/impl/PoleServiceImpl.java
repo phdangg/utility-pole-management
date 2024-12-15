@@ -20,7 +20,7 @@ public class PoleServiceImpl implements PoleService {
     }
 
     @Override
-    public Pole createPole(Pole pole) {
+    public Pole create(Pole pole) {
         try {
             return poleRepository.save(pole);
         }
@@ -36,7 +36,7 @@ public class PoleServiceImpl implements PoleService {
     }
 
     @Override
-    public Pole updatePole(Integer id, Pole poleDetails) {
+    public Pole update(Integer id, Pole poleDetails) {
         Pole existingPole = poleRepository.findById(id)
                 .orElseThrow(() -> new PoleNotFoundException("Pole not found with id " + id));
 
@@ -59,17 +59,17 @@ public class PoleServiceImpl implements PoleService {
     }
 
     @Override
-    public Optional<Pole> getPoleById(Integer id) {
+    public Optional<Pole> get(Integer id) {
         return poleRepository.findById(id);
     }
 
     @Override
-    public List<Pole> getAllPoles() {
+    public List<Pole> getAll() {
         return poleRepository.findAll();
     }
 
     @Override
-    public void deletePole(Integer id) {
+    public void delete(Integer id) {
         Pole pole = poleRepository.findById(id)
                 .orElseThrow(() -> new PoleNotFoundException("Pole not found with id " + id));
         poleRepository.delete(pole);

@@ -25,7 +25,7 @@ public class CableController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Cable> getCableTypeById(@PathVariable Integer id) {
-        return ResponseEntity.ok(cableService.getById(id));
+        return ResponseEntity.ok(cableService.get(id));
     }
 
     @PostMapping

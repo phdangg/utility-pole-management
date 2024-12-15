@@ -55,19 +55,19 @@ public class PriceListPoleServiceImpl implements PriceListPoleService {
     }
 
     @Override
-    public List<PriceListPole> findAll() {
+    public List<PriceListPole> getAll() {
         return priceListPoleRepository.findAll();
     }
 
     @Override
-    public PriceListPole findById(PriceListPole.Id id) {
+    public PriceListPole get(PriceListPole.Id id) {
         return priceListPoleRepository.findById(id)
                 .orElseThrow(() -> new PriceListPoleNotFound("PriceListPole not found"));
     }
 
 
     @Override
-    public void deleteById(PriceListPole.Id id) {
+    public void delete(PriceListPole.Id id) {
         PriceListPole existingPriceListPole = priceListPoleRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("PriceListPole not found"));
 

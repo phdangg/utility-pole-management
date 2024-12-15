@@ -24,7 +24,7 @@ public class CableServiceImpl implements CableService {
     }
 
     @Override
-    public Cable getById(Integer cableId) {
+    public Cable get(Integer cableId) {
         return cableRepository.findById(cableId)
                 .orElseThrow(()-> new CableNotFoundException("Cable not found with id " + cableId));
     }

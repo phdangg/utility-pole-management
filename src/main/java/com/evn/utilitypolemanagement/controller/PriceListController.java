@@ -20,7 +20,7 @@ public class PriceListController {
 
     @PostMapping
     public ResponseEntity<PriceList> createPriceList(@RequestBody PriceList priceList) {
-        PriceList newPriceList = priceListService.createPriceList(priceList);
+        PriceList newPriceList = priceListService.create(priceList);
         return new ResponseEntity<>(newPriceList, HttpStatus.CREATED);
     }
 
@@ -28,25 +28,25 @@ public class PriceListController {
     public ResponseEntity<PriceList> updatePriceList(
             @PathVariable("id") Integer priceListId,
             @RequestBody PriceList priceList) {
-        PriceList updatedPriceList = priceListService.updatePriceList(priceListId, priceList);
+        PriceList updatedPriceList = priceListService.update(priceListId, priceList);
         return new ResponseEntity<>(updatedPriceList, HttpStatus.OK);
     }
 
     @GetMapping
     public ResponseEntity<List<PriceList>> getAllPriceLists() {
-        List<PriceList> priceLists = priceListService.getAllPriceLists();
+        List<PriceList> priceLists = priceListService.getAll();
         return new ResponseEntity<>(priceLists, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<PriceList> getPriceListById(@PathVariable("id") Integer priceListId) {
-        PriceList priceList = priceListService.getPriceListById(priceListId);
+        PriceList priceList = priceListService.get(priceListId);
         return ResponseEntity.ok(priceList);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePriceList(@PathVariable("id") Integer priceListId) {
-        priceListService.deletePriceList(priceListId);
+        priceListService.delete(priceListId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

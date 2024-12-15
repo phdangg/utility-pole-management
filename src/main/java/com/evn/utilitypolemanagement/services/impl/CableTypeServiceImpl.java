@@ -18,7 +18,7 @@ public class CableTypeServiceImpl implements CableTypeService {
     }
 
     @Override
-    public CableType createCableType(CableType cableType) {
+    public CableType create(CableType cableType) {
         if (cableTypeRepository.findByCableTypeName(cableType.getCableTypeName()).isPresent())
             throw new CableTypeAlreadyExistsException("Cable type with name already exist");
         return cableTypeRepository.save(cableType);
@@ -41,18 +41,18 @@ public class CableTypeServiceImpl implements CableTypeService {
     }
 
     @Override
-    public List<CableType> getAllCableTypes() {
+    public List<CableType> getAll() {
         return cableTypeRepository.findAll();
     }
 
     @Override
-    public CableType getCableTypeById(Integer cableTypeId) {
+    public CableType get(Integer cableTypeId) {
         return cableTypeRepository.findById(cableTypeId)
                 .orElseThrow(()->new CableTypeNotFoundException("Not found cable with id " + cableTypeId));
     }
 
     @Override
-    public void deleteCableType(Integer cableTypeId) {
+    public void delete(Integer cableTypeId) {
         CableType cableType = cableTypeRepository.findById(cableTypeId)
                 .orElseThrow(()->new CableTypeNotFoundException("Not found cable with id " + cableTypeId));
         cableTypeRepository.delete(cableType);

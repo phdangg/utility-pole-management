@@ -19,18 +19,18 @@ public class CableTypeController {
 
     @GetMapping
     public ResponseEntity<List<CableType>> getAllCableTypes() {
-        List<CableType> CableTypes = cableTypeService.getAllCableTypes();
+        List<CableType> CableTypes = cableTypeService.getAll();
         return ResponseEntity.ok(CableTypes);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CableType> getCableTypeById(@PathVariable Integer id) {
-        return ResponseEntity.ok(cableTypeService.getCableTypeById(id));
+        return ResponseEntity.ok(cableTypeService.get(id));
     }
 
     @PostMapping
     public ResponseEntity<CableType> createCableType(@RequestBody CableType CableType) {
-        CableType createdCableType = cableTypeService.createCableType(CableType);
+        CableType createdCableType = cableTypeService.create(CableType);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdCableType);
     }
 
@@ -42,7 +42,7 @@ public class CableTypeController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCableType(@PathVariable Integer id) {
-        cableTypeService.deleteCableType(id);
+        cableTypeService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
