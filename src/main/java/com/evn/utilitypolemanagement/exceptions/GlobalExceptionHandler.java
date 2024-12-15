@@ -1,5 +1,6 @@
 package com.evn.utilitypolemanagement.exceptions;
 
+import com.evn.utilitypolemanagement.exceptions.Cable.CableNotFoundException;
 import com.evn.utilitypolemanagement.exceptions.CapleType.CableTypeAlreadyExistsException;
 import com.evn.utilitypolemanagement.exceptions.CapleType.CableTypeNotFoundException;
 import com.evn.utilitypolemanagement.exceptions.Pole.PoleAlreadyExistsException;
@@ -36,6 +37,10 @@ public class GlobalExceptionHandler {
     }
     @ExceptionHandler(CableTypeAlreadyExistsException.class)
     public ProblemDetail handleCableTypeAlreadyExistsException(CableTypeAlreadyExistsException e){
+        return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND,e.getMessage());
+    }
+    @ExceptionHandler(CableNotFoundException.class)
+    public ProblemDetail handleCableNotFoundException(CableNotFoundException e){
         return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND,e.getMessage());
     }
 }
