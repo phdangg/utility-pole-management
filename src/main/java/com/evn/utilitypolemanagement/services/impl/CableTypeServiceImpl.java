@@ -25,7 +25,7 @@ public class CableTypeServiceImpl implements CableTypeService {
     }
 
     @Override
-    public CableType updateCableType(Integer cableTypeId, CableType cableType) {
+    public CableType update(Integer cableTypeId, CableType cableType) {
         CableType existingCableType = cableTypeRepository.findById(cableTypeId)
                 .orElseThrow(() -> new CableTypeNotFoundException("Not found cable with id " + cableTypeId));
 

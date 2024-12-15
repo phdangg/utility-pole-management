@@ -36,7 +36,7 @@ public class CableTypeController {
 
     @PutMapping("/{id}")
     public ResponseEntity<CableType> updateCableType(@PathVariable Integer id, @RequestBody CableType CableTypeDetails) {
-        CableType updatedCableType = cableTypeService.updateCableType(id, CableTypeDetails);
+        CableType updatedCableType = cableTypeService.update(id, CableTypeDetails);
         return ResponseEntity.ok(updatedCableType);
     }
 
